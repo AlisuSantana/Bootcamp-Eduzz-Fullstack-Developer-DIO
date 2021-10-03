@@ -14,6 +14,9 @@
     #Lista os container em execução, para listar os que não estão precisamos colocar o parâmetro -a
     docker ps -a
 
+    #curl localhost
+    #Docker netstat -n
+
     #Docker INFO
     #Exibe um sumuário dos nossos container, como também especificações do nosso docker
     docker info

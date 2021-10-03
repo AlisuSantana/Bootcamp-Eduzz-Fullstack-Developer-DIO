@@ -17,6 +17,7 @@
  * VMs (virtualBox, Azure, AWS)
  * Obs: Para Windows temos o Docker Desktop
  * 
+ * commands used
  * docker Info
  * docker Exec
  * docker Stop, start
@@ -30,4 +31,5 @@
  * docker search
  * docker export, import 
  * docker save, load
+ * 
  */
