@@ -1,0 +1,59 @@
+- show databases
+- use <nameDB>
+- show collections
+
+- db.createCollection("<nameColletion>",{capped: true, max:2, size:2});//Especificando
+- db.<nameCollection>.insert([ {<registro>},{<registro>} ]);//Não Especificando
+
+- db.<namaColletion>.save( {<registro>},{<registro>} ) // Caso exista ele faz um update | caso não haja o registro ele cria
+
+- db.<nameColletion>.insertOne({ <registro> });
+
+- db.<nameColletion>.update({<ONDE>}, { $set: { <MUDA O QUE> } })
+- db.<nameColletion>.update({<ONDE>}, { $set: { <MUDA O QUE> } }, {multi: true}) ou
+- db.<nameColletion>.updateMany({<ONDE>}, { $set: { <MUDA O QUE> } })
+
+- db.<nameColletion>.find({})
+- db.<nameColletion>.find({ <ONDE>})
+- db.<nameColletion>.find({ <ONDE>:{$in: [<?>, <?>...]} })
+- db.<nameColletion>.find({$or: [ {<?>}, {<?>} ] })
+- db.<nameColletion>.find({<O QUE>: {$lt: <Menor QUE>} }) 
+{ $lt: < | $lte: <=, | $nte: <> | $gt: > | $eq: == | gte: >= }
+
+- db.clients.deleteOne({<ONDE>})
+- db.clients.deleteMany({<ONDE>})
+
+- db.<nameColletion>.createIndex(<QUAL CAMPO>: 1, {"name": "idx_name"})
+
+- db.<nameColletion>.find({"name": "Allyson"}).explain(true);
+
+
+Agregação e proposito único (Eles não permintem as customizações das agregações utilizando pipeline);
+- count
+- distinct
+-----------------------------------
+As pipelines mais básicas fornecem "filtros" e "Operadores"
+Operadores: $group, $addFields entre outros...
+
+exemplos sintax:
+db.getColletion("nameColletion").aggregate([ {$group: {}} ])
+db.getColletion("nameColletion").aggregate([ {$addFilds: {}} ])
+-----------------------------------
+Funções
+$sum
+$avg
+$max
+$min
+
+exemplos sintax:
+db.getColletion("nameColletion").aggregate([ {$group: {<CampoQueDesejaAgregar>, total: {$sun: 1} }} ])
+------------------------------------
+Operadores lógicos
+$and
+$or
+$not
+$nor
+
+exemplos sintax:
+db.getColletion("nameColletion").aggregate( {$and:[ {<Campo>} ]} )
+
