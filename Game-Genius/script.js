@@ -7,10 +7,8 @@ let order = [];
 let clickedOrderPlayer = [];
 let score = [];
 
-
-
 /**
- * Retorna o elemento cor correspondente ao valor
+ * Retorna o objeto elemento cor correspondente ao valor
  */
 const createColorElement = (color) => {
     if(color == 0) {
@@ -30,8 +28,9 @@ const createColorElement = (color) => {
     }
 }
 
-
-
+/**
+ * Function de fim de jogo
+ */
 const gameOver = () => {
     alert(`OPSSS... Você errou! Sua pontuação final foi ${score}. Clique em OK para Iniciar um novo jogo`);
     order = [];
@@ -40,6 +39,9 @@ const gameOver = () => {
     playGame();
 }
 
+/**
+ * Checa se as ordens digitadas pelo Player estão corretas
+ */
 const ckeckOrderPlayer = () => {
     for (let key in clickedOrderPlayer) {
         if ( clickedOrderPlayer[key] != order[key] ) {
@@ -52,7 +54,9 @@ const ckeckOrderPlayer = () => {
         nextLevel();
     }
 }
-
+/**
+ * Function de resposta de clique do Player
+ */
 const playerClick = (color) => {
     clickedOrderPlayer[clickedOrderPlayer.length] = color;
 
@@ -66,16 +70,18 @@ const playerClick = (color) => {
 }
 
 /**
- * Executa as sequências das cores 
+ * Executa as sequências das cores com times terteminados
  */
  const lightColorAll = async () => {
     for (let i = 0; i < order.length; i++){
         let elementColor = createColorElement(order[i]);
+
         setTimeout(() => {
-                elementColor.classList.add('selected');
-                setTimeout(() => {
-                    elementColor.classList.remove('selected');
-                }, 500 );  
+            elementColor.classList.add('selected');
+            
+            setTimeout(() => {
+                elementColor.classList.remove('selected');
+            }, 500 );  
         }, 500 * i + 1); 
     }
 }
@@ -94,28 +100,46 @@ const playerClick = (color) => {
     lightColorAll();
 };
 
+/**
+ * Function que eleva a dificuldade do Game - Niveis
+ */
 const nextLevel = () => {
     score++;
     clickedOrderPlayer = [];
     shuffleOrder();
 }
 
+/**
+ * Function inicia Gamae
+ */
 const playGame = () => {
     alert("Olá, Vamo Joga ?");
     nextLevel();
 }
 
+
+/**
+ * Adiciona evento de clique ao objects color
+ */
 green.onclick = () => playerClick(0);
 red.onclick = () => playerClick(1);
 yellow.onclick = () => playerClick(2);
 blue.onclick = () => playerClick(3);
 
+
+/**
+ * Function Disableed Buttons
+ */
 const disabledButtons = () => {
     red.disabled = true;
     green.disabled = true;
     yellow.disabled = true;
     blue.disabled = true;
 }
+
+/**
+ * Function Enable Buttons
+ */
 const enableButtons = () => {
     red.disabled = true;
     green.disabled = true;
