@@ -3,9 +3,13 @@ const red = document.querySelector('.red');
 const green = document.querySelector('.green');
 const yellow = document.querySelector('.yellow');
 
+//                   green     red     yellow   blue    complete  faiel
+const fileAudios = ['0.mp3', '1.mp3', '2.mp3', '3.mp3', '4.mp3', '5.mp3'];
+
 let order = [];
 let clickedOrderPlayer = [];
 let score = [];
+let audios = [];
 
 /**
  * Retorna o objeto elemento cor correspondente ao valor
@@ -32,6 +36,7 @@ const createColorElement = (color) => {
  * Function de fim de jogo
  */
 const gameOver = () => {
+    playAudio(5);
     alert(`OPSSS... Você errou! Sua pontuação final foi ${score}. Clique em OK para Iniciar um novo jogo`);
     order = [];
     clickedOrderPlayer = [];
@@ -50,10 +55,14 @@ const ckeckOrderPlayer = () => {
         }
     }
     if(clickedOrderPlayer.length == order.length) {
-        alert("Parabêns, Você acertou a sequência! Clique em OK para iniciar o proxímo Nível");
+        if (clickedOrderPlayer.length != 0 && order.length != 0) {
+            playAudio(4); // audio complete
+            alert("Parabêns, Você acertou a sequência! Clique em OK para iniciar o proxímo Nível");
+        }        
         nextLevel();
     }
 }
+
 /**
  * Function de resposta de clique do Player
  */
@@ -62,6 +71,7 @@ const playerClick = (color) => {
 
     let element = createColorElement(color);
     element.classList.add('selected');
+    playAudio(color);
 
     setTimeout(() => {
         element.classList.remove('selected');
@@ -78,6 +88,7 @@ const playerClick = (color) => {
 
         setTimeout(() => {
             elementColor.classList.add('selected');
+            playAudio(order[i]);
             
             setTimeout(() => {
                 elementColor.classList.remove('selected');
@@ -106,6 +117,7 @@ const playerClick = (color) => {
 const nextLevel = () => {
     score++;
     clickedOrderPlayer = [];
+
     shuffleOrder();
 }
 
@@ -113,10 +125,10 @@ const nextLevel = () => {
  * Function inicia Gamae
  */
 const playGame = () => {
-    alert("Olá, Vamo Joga ?");
+    if (audios == "") loadAudios();
+    alert("Olá, Vamo Joga ?");    
     nextLevel();
 }
-
 
 /**
  * Adiciona evento de clique ao objects color
@@ -125,7 +137,6 @@ green.onclick = () => playerClick(0);
 red.onclick = () => playerClick(1);
 yellow.onclick = () => playerClick(2);
 blue.onclick = () => playerClick(3);
-
 
 /**
  * Function Disableed Buttons
@@ -147,4 +158,45 @@ const enableButtons = () => {
     blue.disabled = true;
 }
 
-playGame();
+/**
+ * Function carrega obejects audios e atribui ao array audios
+ */
+const loadAudios = () => {  
+    audios = fileAudios.map( (audio) => prepareAudios(audio));    
+}
+
+/**
+ * Prepara o audio para object e retorna, onde é 
+ * atribuida a variavel audios na function loadAudios
+ */
+const prepareAudios = (filename) => {    
+    const file = `./audios/${filename}?cb=${new Date().getTime()}`;
+    const audio = new Audio(file);
+    audio.allow="autoplay"
+    audio.load();
+    return audio;
+}
+
+ /**
+  * Executar a função de sons
+  */
+const playAudio = (position) => {
+    audios[position].play();
+};
+
+/**
+ * Function necessaria para não ocorrer o erro -> Uncaught (in promise) DOMException: play() 
+ * failed because the user didn't interact with the document first. https://goo.gl/xX8pDD
+ */
+document.querySelector('.start').addEventListener('click', () => {
+
+    document.querySelector('.start').classList.add('start-none');
+    
+    setTimeout(() => {
+        playGame();
+    }, 300);
+
+})
+
+
+

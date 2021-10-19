@@ -50,3 +50,30 @@ body {
 .selected {
     opacity: 0.3;
 }
+
+
+.start{
+    position: absolute;
+    margin: 0%;
+    border: none;
+    border-radius: 100%;
+    width: 12%;
+    height: 20%;
+    background-color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;
+    box-shadow: 4px 4px 2px black;
+    padding: 5px;
+}
+
+.start:hover {
+    width: 10%;
+    height: 18%;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.start-none{
+    display: none;
+}
