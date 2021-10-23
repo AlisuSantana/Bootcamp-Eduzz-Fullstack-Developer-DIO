@@ -11,9 +11,13 @@ userRoute.get('/users', async (req: Request, res: Response, next: NextFunction) 
 });
 
 userRoute.get('/users/:id', async (req: Request<{id: string}>, res: Response, next: NextFunction) => {
-    const id = req.params.id;   
-	const user = await UserRepository.findById(id);
-    res.status(StatusCodes.OK).send(user);
+    try {
+		const id = req.params.id;   
+		const user = await UserRepository.findById(id);
+		res.status(StatusCodes.OK).send(user);
+	} catch(error) {
+		next(error);
+	}
 });
 
 
