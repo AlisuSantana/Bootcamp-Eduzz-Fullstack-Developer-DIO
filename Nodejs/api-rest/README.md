@@ -18,7 +18,7 @@ npm install --save-dev ts-node-dev
 npm install --save jsonwebtoken
 npm install --save-dev @types/jsonwebtoken
 
-
+/* Configurações *\
 
 OBS: package.json...
   "scripts": {
