@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import ForbiddenError from '../models/errors/forbidden_error_models';
 import { StatusCodes } from 'http-status-codes';
-import JWT from 'jsonwebtoken';
+import JWT, { SignOptions } from 'jsonwebtoken';
 import basicAuthenticationMiddleware from '../middlewares/basic_authentication_middleware';
 import jwtAthenticationMiddleware from "../middlewares/jwt_authentication_middleware";
 
@@ -20,7 +20,7 @@ authorization.post('/token', basicAuthenticationMiddleware, async (req: Request,
 			throw new ForbiddenError("Opsss... Não foi informado o usuário");
 		}
 		const jwtPayload = { userName: user.userName };
-		const jwtOptions = { subject: user?.uuid };
+		const jwtOptions: SignOptions = { subject: user?.uuid, expiresIn: 60000 };
 		const secretKey = 'my_secret_key';		
 		
 		const jwt = JWT.sign( jwtPayload, secretKey, jwtOptions );
