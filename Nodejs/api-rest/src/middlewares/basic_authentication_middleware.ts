@@ -1,8 +1,8 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import ForbiddenError from '../models/errors/forbidden_error_models';
 import UserRepository from '../repositories/user_repository';
 
-async function basicAuthenticationMiddleware() 
+async function basicAuthenticationMiddleware(req: Request, res: Response, next: NextFunction) 
 {
 	try {
 		

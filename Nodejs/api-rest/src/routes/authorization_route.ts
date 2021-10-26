@@ -1,14 +1,13 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response, NextFunction } from "express";
 import ForbiddenError from '../models/errors/forbidden_error_models';
-import UserRepository from '../repositories/user_repository';
 import { StatusCodes } from 'http-status-codes';
 import JWT from 'jsonwebtoken';
+import basicAuthenticationMiddleware from '../middlewares/basic_authentication_middleware';
 
 const authorization = Router();
 
-authorization.post('/token', basicAuthenticationMiddleware, async 
-					(req: Request, res: Response, next: NextFunction) => {
-						
+authorization.post('/token', basicAuthenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+		
 	try {
 		const user = req.user;
 		if(!user) {
@@ -25,6 +24,6 @@ authorization.post('/token', basicAuthenticationMiddleware, async
 		next(error);
 	}
 	
-})
+});
 
 export default authorization;
