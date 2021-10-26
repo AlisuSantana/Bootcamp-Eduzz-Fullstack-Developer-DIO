@@ -15,6 +15,9 @@ npm install --save-dev typescript
 tsc --init
 npm install --save-dev @types/node 
 npm install --save-dev ts-node-dev 
+npm install --save jsonwebtoken
+npm install --save-dev @types/jsonwebtoken
+
 
 
 OBS: package.json...

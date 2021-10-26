@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import userRoute from './routes/users_route';
 import statusRoute from './routes/status_route';
 import errorHandler from './middlewares/error_handler_middleware';
+import authorizationRoute from './routes/authorization_route';
 
 const app = express(); // criando uma instancia do express
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true })); // entender as requisiçoes de 
 // configuração das rotas
 app.use(statusRoute);
 app.use(userRoute);
+app.use(authorizationRoute);
 
 // Configuração dos Handlers de Error (Tratamento de errors)
 app.use(errorHandler);

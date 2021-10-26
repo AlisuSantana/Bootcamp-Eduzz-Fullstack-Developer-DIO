@@ -1,5 +1,6 @@
 
-class DatabaseError extends Error {
+class DatabaseError extends Error 
+{
 	
 	constructor (
 		public message: string,

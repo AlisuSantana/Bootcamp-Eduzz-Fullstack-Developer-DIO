@@ -1,6 +1,6 @@
 import db from '../db';
-import User from '../models/user.models';
-import DatabaseError from '../models/database_error_models';
+import User from '../models/user_models';
+import DatabaseError from '../models/errors/database_error_models';
 
 class UserRepository {
 	
@@ -18,6 +18,20 @@ class UserRepository {
 			const { rows } = await db.query<User>(sql, params);
 			const [ user ] = rows; 
 			return user;
+		} catch(error) {
+			throw new DatabaseError('Erro na consulta por ID', error);
+		}
+	}	
+	
+	async findByIdUserNameAndPassword(userName: string, userPassword: string): Promise<User | null> {
+		try {
+			const sql = `SELECT uuid, userName FROM application_users
+							WHERE userName = $1
+								AND userPassword = crypt($2, 'my_salt')`;
+			const params = [userName, userPassword];
+			const { rows } = await db.query<User>(sql, params);
+			const [user] = rows;
+			return user || null;
 		} catch(error) {
 			throw new DatabaseError('Erro na consulta por ID', error);
 		}
