@@ -30,7 +30,6 @@ async function basicAuthenticationMiddleware(req: Request, res: Response, next: 
 			throw new ForbiddenError("Credenciais infalidas");
 		}
 		
-		
 		req.user = user;
 		
 		next();
