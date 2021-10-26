@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import ForbiddenError from '../models/errors/forbidden_error_models';
 import JWT from 'jsonwebtoken';
-import userRepository from '../repositories/user_repository';
 
-async function bearerAthenticationMiddleware(req: Request, res: Response, next: NextFunction) 
+async function jwtAthenticationMiddleware(req: Request, res: Response, next: NextFunction) 
 {
     try {
 
@@ -34,9 +33,9 @@ async function bearerAthenticationMiddleware(req: Request, res: Response, next: 
         
         next();
     } catch (error) {
-        next(error);
+        next(error); //throw new ForbiddenError("token inválido");
     }
 }
 
 
-export default bearerAthenticationMiddleware;
+export default jwtAthenticationMiddleware;
