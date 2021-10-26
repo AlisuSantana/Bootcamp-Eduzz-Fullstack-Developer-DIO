@@ -7,6 +7,10 @@ import jwtAthenticationMiddleware from "../middlewares/jwt_authentication_middle
 
 const authorization = Router();
 
+authorization.post('/token/refresh', jwtAthenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+	res.sendStatus(StatusCodes.OK);
+});
+
 authorization.post('/token/validate', jwtAthenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
 	res.sendStatus(StatusCodes.OK);
 });
@@ -20,7 +24,7 @@ authorization.post('/token', basicAuthenticationMiddleware, async (req: Request,
 			throw new ForbiddenError("Opsss... Não foi informado o usuário");
 		}
 		const jwtPayload = { userName: user.userName };
-		const jwtOptions: SignOptions = { subject: user?.uuid, expiresIn: 60000 };
+		const jwtOptions: SignOptions = { subject: user?.uuid, expiresIn: '15m' };
 		const secretKey = 'my_secret_key';		
 		
 		const jwt = JWT.sign( jwtPayload, secretKey, jwtOptions );
